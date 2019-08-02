@@ -3,9 +3,10 @@ __pycache__
 migrations
 *.bak
 .sqlite3
-*.log
+*.logg
 *.pot
 venv
+media
 */migrations
 */__pycache__
 *.sqlite3
