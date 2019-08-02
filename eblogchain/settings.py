@@ -86,8 +86,8 @@ if DEBUG:
 else:
     import json
 
-    c = json.load('credentials.json')
-    
+    c = json.load(open('credentials.json'))
+
     SECRET_KEY = c['SECRET_KEY']
 
     DATABASES = {
