@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Welcome {% endblock %}
+
+
+{% block main %}
+<div class="container">
+    <section class="bg-white shadow-sm">
+
+<div class="flex-row flex-center">
+
+        <form class="flex-col flex-center  w-50" method="post" action=".">
+            <h3>Contact us via</h3>
+            {% csrf_token %}
+            {% if contact_form.errors %}
+                <p>{{ contact_form.errors }}</p>
+            {% endif %}
+            {% for field in contact_form %}
+            <p> <sub class="error">{{ field.errors }}</sub>{{ field }}</p>
+            {% endfor %}
+
+            <p class="m-0">
+                <input type="submit" value=">">
+            </p>
+        </form>
+        <div class="contact-links">
+
+            <div class="flex-col flex-center">
+                    <h3>Or contact us through</h3>
+                <ul class="flex-row flex-center">
+                    <li>
+                        <a href="#">
+                            <img src="{% static 'img/Whatsapp-3.png' %}">
+                            <h6>Whatsapp</h6>
+                        </a>
+                    </li>
+                    <li>
+                            <a href="#">
+                                <img src="{% static 'img/telegram.png' %}">
+                                <h6>Telegram</h6>
+                            </a>
+                        </li>
+                        <li>
+                                <a href="#">
+                                    <div class="image-icon"><img src="{% static 'img/twitter.png' %}"></div>
+                                    <h6>Twitter</h6>
+                                </a>
+                            </li>
+                            <li>
+                                    <a href="#">
+                                        <img src="{% static 'img/facebook.png' %}">
+                                        <h6>Facebook</h6>
+                                    </a>
+                                </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    </section>
+</div>
+{% endblock %}

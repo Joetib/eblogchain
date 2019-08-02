@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load static %}
+
+{% block title %}Welcome {% endblock %}
+
+
+{% block main %}
+<div class="container">
+
+    <section class="bg-white shadow-sm">
+        <div class="flex-row flex-center">
+            <div>
+                <div class="profile-image">
+                    <img src="
+                        {% if request.user.profile.picture %}
+                            {{ request.user.profile.picture.url }}
+                        {% else %}
+                            {% static 'img/profile-icon1.png' %}
+                        {% endif %}
+                    " alt="Profile Image"> 
+                </div>
+                <table class="profile-table">
+                    <tr>
+                        <td>Momo Name</td>
+                        <td>{{ request.user.profile.momo_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Momo Number</td>
+                        <td>{{ request.user.username }}</td>
+                    </tr>
+                </table>
+            </div>
+            <form action="." method="POST" enctype="multipart/form-data" class="flex-col flex-center   w-50">
+                {% csrf_token %}
+                {{ profile_form.as_p }}
+                <p class="m-0"><input type="submit" value=">"></p>
+                <sub>Want to <a href="{% url 'app:login' %}" class="link">Change Password</a>?</sub>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}

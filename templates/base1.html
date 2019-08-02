@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    </head>
+    <body>
+        <div class="overlay {% block extraoverlayclass %}{% endblock %}">
+
+        </div>
+        {% if messages %}
+        <div class="messages-overlay">
+            <div class="messages">
+                <p class="close">x</p>
+                <div class="messages-list">
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        <li class="error">{{ message }}</li>
+                    {% else %}
+                        <li>{{ message }}</li>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="img-background {% block extraimagebackgroundclass %}{% endblock %}">
+            <img src="{% static 'img/bg1.jpg' %}">
+        </div>
+
+
+        {% block content %}
+
+        {% endblock %}
+        {% block footer %}
+        {% endblock %}
+        <script src="{% static 'js/moneysite.js' %}"></script>
+    </body>
+</html>

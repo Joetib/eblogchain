@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load static %}
+
+{% block title %}History {% endblock %}
+
+
+{% block main %}
+<div class="container">
+
+    <section class="bg-white shadow-sm">
+        <div class="history-main flex-col">
+            <div class="flex-row flex-center history-links">
+                <a href="#1" id="history-link1" class="history-bg-white">PLEDGE</a>
+                <a href="#1" id="history-link2">PENDING</a>
+                <a href="#1" id="history-link3">RECEIVED</a>
+            </div>
+            <div id="history-items">
+                <div class="history-item flex-col flex-center">
+                    {% if request.user.profile.has_unconfirmed_ref_number %}
+                    {% for pledge in request.user.profile.pledges.all %}
+                    {{ pledge }}
+                    {% endfor %}
+                        <p>{{ request.user.profile.has_unconfirmed_ref_number }} <a href="{% url 'app:momo_ref_confirm' %}" class="link">Enter Momo Reference code</a> for existing Pledge</p>
+                    {% else %}
+                        <form class="flex-col flex-center  w-50 m-auto" method="post" action=".">
+                            <h3>Pledge</h3>
+
+                            {% csrf_token %}
+                            {% if pledge_form.errors %}
+                            <p>{{ pledge_form.errors }}</p>
+                            {% endif %}
+                            {% for field in pledge_form %}
+                            <p> <sub class="error">{{ field.errors }}</sub>{{ field }}</p>
+                            {% endfor %}
+
+                            <p class="m-0">
+                                <input type="submit" value=">">
+                            </p>
+                        </form>
+                    {% endif %}
+                </div>
+                <div class="history-item flex-col flex-center hidden">
+                    {% if next_payment %}
+                    {% if next_payment.confirm_received %}
+                        <h3>Amount: GH {{ next_payment.amount }}</h3>
+                        <div class="countdown">
+                            <table>
+                                <tr>
+                                    <td colspan="4">Time to next payment</td>
+                                </tr>
+                                <tr>
+                                    <td id="days"></td>
+                                    <td id="hours"></td>
+                                    <td id="minutes"></td>
+                                    <td id="seconds"></td>
+                                </tr>
+                                <tr>
+                                    <td>Days</td>
+                                    <td>Hours</td>
+                                    <td>Minutes</td>
+                                    <td>Seconds</td>
+
+                                </tr>
+                            </table>
+                        <script>
+                            function countdown(){
+                                var now = new Date()
+
+                                var eventDate = new Date("{{ next_payment.payment_due|escapejs }}");
+                                var currentTime = now.getTime();
+                                var eventTime = eventDate.getTime();
+                                var remTime = eventTime - currentTime;
+                                var s = Math.floor(remTime/ 1000);
+                                var m = Math.floor(s/60);
+                                var h = Math.floor(m/60);
+                                var d = Math.floor(h/24);
+                                h %= 24;
+                                m %=60;
+                                s %=60;
+                                h = (h<10) ? "0" + h: h;
+                                m = (m<10) ? "0" + m: m;
+                                s = (s<10) ? "0" + s: s;
+                                document.getElementById("days").textContent = d;
+                                document.getElementById("hours").textContent = h;
+                                document.getElementById("minutes").textContent = m;
+                                document.getElementById("seconds").textContent = s;
+                                setTimeout(countdown, 1000);
+                            }
+                            countdown();
+                        </script>
+                        {% else %}
+                        <h2>Please wait while our admins confirm your payment</h2>
+                        {% endif %}
+                        </div>
+                        {% else %}
+                        <h2>You do not have any pending pledges</h2>
+
+                        {% endif %}
+
+                </div>
+                <div class="history-item flex-col flex-center hidden">
+                    <div class="pledge-table-div">
+                    <table class="pledge-table">
+                        <thead>
+                            <td>Amount(GHC)</td>
+                            <td>Returns(GHC)</td>
+                            <td>Date</td>
+                            <td>Returns Date</td>
+                            <td>Completed</td>
+                        </thead>
+                        {% for pledge in request.user.profile.pledges.all %}
+                            {% if pledge.paid %}
+                            <tr>
+                                <td>{{ pledge.amount }}</td>
+                                <td>{{ pledge.amount_to_pay }}</td>
+                                <td>{{ pledge.date_pledged }}</td>
+                                <td>{{ pledge.payment_due }}</td>
+                                <td>{{ pledge.paid }}</td>
+                            </tr>
+                            {% else %}
+                            {% if request.user.profile.pledges.all|length == 1 %}
+                               <tr><td colspan='5'><h2>You have no Pledges received</h2></td></tr>
+                                {% endif %}
+                            {% endif %}
+
+                        {% empty %}
+                    <h2>You have no Pledges received</h2>
+                    {% endfor %}
+
+                </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    var history_link_1 = document.getElementById('history-link1');
+    var history_link_2 = document.getElementById('history-link2');
+    var history_link_3 = document.getElementById('history-link3');
+    var history_items = document.getElementById('history-items');
+    var history_items_list = history_items.children;
+    var links = [history_link_1, history_link_2, history_link_3];
+    history_link_1.addEventListener('click', function(e){console.log('here');e.preventDefault(); togglehidden(0);});
+    history_link_2.addEventListener('click', function(e){console.log('here');e.preventDefault();  togglehidden(1);});
+    history_link_3.addEventListener('click', function(e){console.log('here');e.preventDefault(); togglehidden(2);});
+
+    function togglehidden(index){
+
+        for (let i=0; i<links.length; i++){
+            links[i].classList.remove('history-bg-white');
+            history_items_list[i].classList.add('hidden');
+        }
+        links[index].classList.add('history-bg-white');
+        history_items_list[index].classList.remove('hidden');
+
+    }
+</script>
+{% endblock %}

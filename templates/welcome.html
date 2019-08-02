@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %}Welcome {% endblock %}
+
+
+{% block extraoverlayclass %}
+{% endblock %}
+
+{% block extraimagebackgroundclass %}
+{% endblock %}
+
+{% block main %}
+<div class="m-auto w-80 slider-main">
+    <div class="slider-container">
+        <div class="sliders w-90 p-5">
+            <div class="slider-obj ">
+
+                <p>Welcome to <span class="color-primary">BLOGCHAIN</span>. Here your money work for you.</p>
+            </div>
+            <div class="slider-obj">
+
+                <p>Invest with <span class="color-primary">BLOGCHAIN</span> and gain 100% profit</p>
+            </div>
+            <div class="slider-obj">
+
+                <p>Don't save money and work for money. Work <em>smart</em>, not hard.</p>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+<script>
+    var slider_objs = document.getElementsByClassName("slider-obj");
+    var slider_num = 0;
+    var nexts = document.getElementsByClassName("next");
+
+    for (let i = 0; i < nexts.length; i++) {
+        nexts[i].addEventListener('click', function (e) {
+            show_slide(1);
+        });
+    }
+    show_slide(0);
+    function show_slide(num = 1) {
+        for (let i = 0; i < slider_objs.length; i++) {
+            slider_objs[i].classList.add('hidden');
+        }
+
+        slider_num += num;
+        if (slider_num >= slider_objs.length) {
+            slider_num = 0;
+        }
+        else if (slider_num < 0) {
+            slider_num = slider_objs.length - 1;
+        }
+        slider_objs[slider_num].classList.remove('hidden');
+        setTimeout(show_slide, 5000);
+    }
+
+</script>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

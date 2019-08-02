@@ -1,0 +1,71 @@
+{% extends "base1.html" %}
+
+{% load static %}
+
+{% block extraoverlayclass %}
+max-height-70vh
+{% endblock %}
+
+
+{% block extraimagebackgroundclass %}
+max-height-70vh
+{% endblock %}
+
+
+{% block content %}
+
+<div class="flex-col flex-center">
+    <nav class="header-nav">
+        <ul class="flex-row flex-center ">
+            <li {% if "welcome" in request.path %}class="selected" {% endif %}>
+                <a href="{% url 'app:welcome' %}">
+                    <div class="image-icon">
+                        <img src="{% static 'img/home-icon.png' %}">
+                    </div>
+                    <h6>Welcome</h6>
+                </a>
+            </li>
+            <li {% if "profile" in request.path %}class="selected" {% endif %}>
+                <a href="{% url 'app:profile' %}">
+                    <div class="image-icon">
+                        <img src="{% static 'img/profile-icon1.png' %}">
+                    </div>
+                    <h6>Profile</h6>
+                </a>
+            </li>
+            <li {% if "about" in request.path %}class="selected" {% endif %}>
+                <a href="{% url 'app:about' %}">
+                    <div class="image-icon">
+                        <img src="{% static 'img/about-icon.png' %}">
+                    </div>
+                    <h6>About Us</h6>
+                </a>
+            </li>
+            <li {% if "history" in request.path %}class="selected" {% endif %}>
+                <a href="{% url 'app:history' %}">
+                    <div class="image-icon">
+                        <img src="{% static 'img/history-icon.png' %}">
+                    </div>
+                    <h6>History</h6>
+                </a>
+            </li>
+            <li {% if "contact" in request.path %}class="selected" {% endif %}>
+                <a href="{% url 'app:contact' %}">
+                    <div class="image-icon">
+                        <img src="{% static 'img/contact-icon.png' %}">
+                    </div>
+                    <h6>Contact Us</h6>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    {% block main %}
+
+    {% endblock %}
+    {% block footer %}
+    <footer>
+            <p> &copy; <span>BLOGCHAIN</span> 2019.</p>
+    </footer>
+    {% endblock %}
+</div>
+    {% endblock %}

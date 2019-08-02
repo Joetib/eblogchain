@@ -1,0 +1,14 @@
+{% extends "base1.html" %}
+
+{% block title %}
+Index
+{% endblock %}
+
+{% block content %}
+<div class="mid-links abs-center">
+    <a href="{% url 'app:login' %}" class="button" id="loginlink">
+        Log In
+    </a>
+    <a href="{% url 'app:signup' %}" class="button" id="signuplink">Sign Up</a>
+</div>
+{% endblock %}

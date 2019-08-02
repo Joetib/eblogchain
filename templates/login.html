@@ -1,0 +1,29 @@
+{% extends "base1.html" %}
+
+{% block title %}
+Log In
+{% endblock %}
+
+{% block content %}
+<div class="p-5">
+    <h1 class="page-header">Log In</h1>
+
+<div class="flex-row flex-center">
+
+        <form class="flex-col flex-center  w-50" method="post" action=".">
+            {% csrf_token %}
+            {% if login_form.errors %}
+                <p>{{ login_form.errors }}</p>
+            {% endif %}
+            {% for field in login_form %}
+            <p> <sub class="error">{{ field.errors }}</sub>{{ field }}</p>
+            {% endfor %}
+
+            <p class="m-0">
+                <input type="submit" value=">">
+            </p>
+            <sub>Not having an account? <a href="{% url 'app:signup' %}" class="link">Sign up here</a></sub>
+        </form>
+    </div>
+</div>
+{% endblock %}

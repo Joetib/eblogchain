@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load static %}
+
+{% block title %}History {% endblock %}
+
+
+{% block main %}
+<div class="container">
+
+    <section class="bg-white shadow-sm">
+        <div class="history-main flex-col">
+            <div class="flex-row flex-center history-links">
+                <a href="#1" id="history-link1">PLEDGE</a>
+                <a href="#1" id="history-link2">PENDING</a>
+                <a href="#1" id="history-link3">RECEIVED</a>
+            </div>
+            <div id="history-items">
+                <div class="container flex-col flex-center">  
+                        <form class="flex-col flex-center  w-50 m-auto" method="post" action=".">
+                            <h3>Pledge</h3>
+                        
+                            {% csrf_token %}
+                            {% if momo_ref_form.errors %}
+                            <p>{{ momo_ref_form.errors }}</p>
+                            {% endif %}
+                            {% for field in momo_ref_form %}
+                            <p> <sub class="error">{{ field.errors }}</sub>{{ field }}</p>
+                            {% endfor %}
+                            <p class="m-0">
+                                <input type="submit" value=">">
+                            </p>
+                        </form>
+                    {% endif %}
+                </div>
+               
+               
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
