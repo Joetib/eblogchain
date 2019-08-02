@@ -25,7 +25,7 @@ SECRET_KEY = 'm+=)kuys+ilba=c2i5wmd3o37sz)4^^6=oapirm5#vs)rs%utf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['komlearn.pythonanywhere.com','127.0.0.1',]
+ALLOWED_HOSTS = ['165.22.208.91',]
 
 
 # Application definition
