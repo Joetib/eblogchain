@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'm+=)kuys+ilba=c2i5wmd3o37sz)4^^6=oapirm5#vs)rs%utf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
 
 ALLOWED_HOSTS = ['165.22.208.91',]
 
@@ -74,13 +74,32 @@ WSGI_APPLICATION = 'eblogchain.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+if DEBUG:
+    SECRET_KEY = 'm+=)kuys+ilba=c2i5wmd3o37sz)4^^6=oapirm5#vs)rs%utf'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    import json
+
+    c = json.load('credentials.json')
+    
+    SECRET_KEY = c['SECRET_KEY']
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': c['NAME'],
+            'USER': c['USER'],
+            'PASSWORD': c['PASSWORD'],
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
 
 
 # Password validation
